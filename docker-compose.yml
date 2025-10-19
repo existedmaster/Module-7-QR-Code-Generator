@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - QR_CODE_DIR=/app/qr_codes
-      - FILL_COLOR=Red
+      - FILL_COLOR=Black
       - BACK_COLOR=Yellow
     volumes:
       - ./qr_codes:/app/qr_codes  # Maps the local 'qr_codes' directory to '/app/qr_codes' in the container
