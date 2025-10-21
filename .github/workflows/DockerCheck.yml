@@ -1,6 +1,6 @@
 name: DockerCheck
 
-on:
+on: #Triggered on push or pull into main branch#
   push:
     branches:
       - main
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  test:
+  test: #Perfoms test job on ubuntu, using the stated steps and steps can be ran with commands#
     runs-on: ubuntu-latest
 
     steps:
@@ -26,11 +26,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-  build:
+  build: #Builds and pushes Docker image to Docker Hub#
     runs-on: ubuntu-latest
     needs: test
 
-    services:
+    services: #Sets up Docker service for building and pushing images#
       docker:
         image: docker:19.03.12
         options: --privileged
@@ -46,7 +46,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Cache Docker layers
+      - name: Cache Docker layers #Caches Docker layers to speed up subsequent builds#
         uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
@@ -54,7 +54,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Log in to Docker Hub
+      - name: Log in to Docker Hub #Logs into Docker Hub using stored credentials#
         uses: docker/login-action@v3
         with:
           username: ${{ vars.DOCKER_U }}
@@ -67,5 +67,5 @@ jobs:
 
       - name: Build and push Docker Compose images
         run: |
-          docker-compose -f docker-compose.yml build
-          docker-compose -f docker-compose.yml push
+          docker compose -f docker-compose.yml build
+          docker compose -f docker-compose.yml push
