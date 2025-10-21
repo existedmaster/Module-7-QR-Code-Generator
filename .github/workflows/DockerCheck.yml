@@ -58,7 +58,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: ${{ vars.Docker_U }}
-          password: ${{ secrets.DockerP }}
+          password: ${{ secrets.DockP }}
 
       - name: Build and push Docker image
         run: |
